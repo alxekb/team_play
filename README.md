@@ -3,6 +3,8 @@
 
 Application help to organize the game, find members and start it.
 
+![class-diagram](./docs/class-diagram.svg)
+
 ## Prerequisites
 
 * [Ruby](https://www.ruby-lang.org/en/) - 3.1.2

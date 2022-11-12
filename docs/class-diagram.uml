@@ -1,0 +1,90 @@
+@startuml
+
+class Sport {
+  +name: String
+}
+
+class Profile {
+  Profile is a player's profile
+  for a specific sport
+  ----
+  +sport: Sport
+  +nickname: String
+  +avatar: String
+  +level: Integer
+  +rank: Integer
+  +score: Integer
+  ----
+  +achievements(): List<Achievement>
+  +friends(): List<Player>
+  +games(): List<Game>
+  +gameRequests(): List<Game>
+  +gameRequestsSent(): List<Game>
+  +gameInvitations(): List<Game>
+  +gameInvitationsSent(): List<Game>
+  +gameHistory(): List<Game>
+  ----
+  +joinGame(game: Game) -> <Boolean, Error>
+  +leaveGame(game: Game) -> <Boolean, Error>
+}
+
+class Game {
+  Game between two or more players
+  for a specific sport in a specific location
+  at a specific time and date
+  and with a specific duration
+  ----
+  +hall: Hall
+  +sport: Sport
+  +started_at: DateTime
+  +ended_at: DateTime
+  +players: Player[]
+  +limit: Integer
+}
+
+class Hall {
+  +address: String
+  +capacity: Integer
+  +name: String
+  +phone: String
+  +email: String
+  +website: String
+}
+
+class Organizer {
+  +name: String
+  +email: String
+  +phone: String
+  +website: String
+  +createHall(name, address, capacity, phone, email, website) -> Hall
+  +createGame(hall: Hall)) -> Game
+}
+
+class Player {
+  +profiles: List<Profile>
+  +email: String
+}
+
+class PlayerGames {
+  +game: Game
+  +playerProfile: Profile
+}
+
+class OrganizerGames {
+  +game: Game
+  +organizer: Organizer
+}
+
+Game "u" -- "1" Hall
+
+PlayerGames "u" -up- "1" Profile
+PlayerGames "u" - "1" Game
+
+OrganizerGames "u" -u- "1" Organizer
+OrganizerGames "u" -l- "1" Game
+
+Player "1" -- "n" Profile
+Profile "n" -l- "1" Sport
+Game "n" -l- "1" Sport
+
+@enduml
